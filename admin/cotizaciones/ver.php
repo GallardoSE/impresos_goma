@@ -63,98 +63,65 @@ if ($resultado->num_rows == 0) {
 }
 
 $cotizacion = $resultado->fetch_assoc();
+
+$titulo_pagina = "Detalle de cotización - Panel administrativo - Impresos Goma";
+include("../../includes/header_admin.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle de cotización - Panel administrativo</title>
-    <link rel="stylesheet" href="../../assets/css/estilos.css">
-</head>
-<body>
+<section class="seccion">
+    <div class="contenedor">
+        <h2 class="titulo-seccion">Detalle de cotización</h2>
 
-<header class="encabezado">
-    <div class="contenedor encabezado-contenido">
-        <div class="logo-area">
-            <h1>Panel administrativo</h1>
-            <p>Detalle de cotización</p>
-        </div>
-
-        <nav class="menu">
-            <a href="../panel.php">Panel</a>
-            <a href="../categorias/index.php">Categorías</a>
-            <a href="../servicios/index.php">Servicios</a>
-            <a href="index.php">Cotizaciones</a>
-            <a href="../usuarios/index.php">Usuarios</a>
-            <a href="../../logout.php">Cerrar sesión</a>
-        </nav>
-    </div>
-</header>
-
-<main>
-    <section class="seccion">
-        <div class="contenedor">
-            <h2 class="titulo-seccion">Detalle de cotización</h2>
-
-            <?php if ($mensaje != "") { ?>
-                <div class="mensaje-exito">
-                    <?php echo $mensaje; ?>
-                </div>
-            <?php } ?>
-
-            <div class="detalle-admin">
-                <h3>Datos del cliente</h3>
-                <p><strong>Nombre:</strong> <?php echo $cotizacion["nombre_cliente"]; ?></p>
-                <p><strong>Teléfono:</strong> <?php echo $cotizacion["telefono"]; ?></p>
-                <p><strong>Correo:</strong> <?php echo $cotizacion["correo"]; ?></p>
-                <p><strong>Fecha de solicitud:</strong> <?php echo $cotizacion["fecha_solicitud"]; ?></p>
-
-                <hr>
-
-                <h3>Datos del servicio solicitado</h3>
-                <p><strong>Servicio:</strong> <?php echo $cotizacion["nombre_servicio"]; ?></p>
-                <p><strong>Categoría:</strong> <?php echo $cotizacion["nombre_categoria"]; ?></p>
-                <p><strong>Cantidad:</strong> <?php echo $cotizacion["cantidad"]; ?></p>
-                <p><strong>Material:</strong> <?php echo $cotizacion["material"]; ?></p>
-                <p><strong>Descripción del diseño:</strong> <?php echo $cotizacion["descripcion_diseno"]; ?></p>
-                <p><strong>Fecha deseada de entrega:</strong> <?php echo $cotizacion["fecha_entrega_deseada"]; ?></p>
-                <p><strong>Comentarios:</strong> <?php echo $cotizacion["comentarios"]; ?></p>
-
-                <hr>
-
-                <h3>Estado de la solicitud</h3>
-
-                <form class="formulario" method="POST" action="ver.php?id=<?php echo $id_cotizacion; ?>">
-                    <div class="grupo-formulario">
-                        <label>Estado</label>
-                        <select name="estado" required>
-                            <option value="Pendiente" <?php if ($cotizacion["estado"] == "Pendiente") echo "selected"; ?>>Pendiente</option>
-                            <option value="En revisión" <?php if ($cotizacion["estado"] == "En revisión") echo "selected"; ?>>En revisión</option>
-                            <option value="Cotizada" <?php if ($cotizacion["estado"] == "Cotizada") echo "selected"; ?>>Cotizada</option>
-                            <option value="Finalizada" <?php if ($cotizacion["estado"] == "Finalizada") echo "selected"; ?>>Finalizada</option>
-                            <option value="Cancelada" <?php if ($cotizacion["estado"] == "Cancelada") echo "selected"; ?>>Cancelada</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="boton-principal">
-                        Guardar estado
-                    </button>
-
-                    <a href="index.php" class="boton-secundario-claro">
-                        Volver
-                    </a>
-                </form>
+        <?php if ($mensaje != "") { ?>
+            <div class="mensaje-exito">
+                <?php echo $mensaje; ?>
             </div>
+        <?php } ?>
+
+        <div class="detalle-admin">
+            <h3>Datos del cliente</h3>
+            <p><strong>Nombre:</strong> <?php echo htmlspecialchars($cotizacion["nombre_cliente"]); ?></p>
+            <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($cotizacion["telefono"]); ?></p>
+            <p><strong>Correo:</strong> <?php echo htmlspecialchars($cotizacion["correo"]); ?></p>
+            <p><strong>Fecha de solicitud:</strong> <?php echo htmlspecialchars($cotizacion["fecha_solicitud"]); ?></p>
+
+            <hr>
+
+            <h3>Datos del servicio solicitado</h3>
+            <p><strong>Servicio:</strong> <?php echo htmlspecialchars($cotizacion["nombre_servicio"]); ?></p>
+            <p><strong>Categoría:</strong> <?php echo htmlspecialchars($cotizacion["nombre_categoria"]); ?></p>
+            <p><strong>Cantidad:</strong> <?php echo htmlspecialchars($cotizacion["cantidad"]); ?></p>
+            <p><strong>Material:</strong> <?php echo htmlspecialchars($cotizacion["material"]); ?></p>
+            <p><strong>Descripción del diseño:</strong> <?php echo htmlspecialchars($cotizacion["descripcion_diseno"]); ?></p>
+            <p><strong>Fecha deseada de entrega:</strong> <?php echo htmlspecialchars($cotizacion["fecha_entrega_deseada"]); ?></p>
+            <p><strong>Comentarios:</strong> <?php echo htmlspecialchars($cotizacion["comentarios"]); ?></p>
+
+            <hr>
+
+            <h3>Estado de la solicitud</h3>
+
+            <form class="formulario" method="POST" action="ver.php?id=<?php echo $id_cotizacion; ?>">
+                <div class="grupo-formulario">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="Pendiente" <?php if ($cotizacion["estado"] == "Pendiente") echo "selected"; ?>>Pendiente</option>
+                        <option value="En revisión" <?php if ($cotizacion["estado"] == "En revisión") echo "selected"; ?>>En revisión</option>
+                        <option value="Cotizada" <?php if ($cotizacion["estado"] == "Cotizada") echo "selected"; ?>>Cotizada</option>
+                        <option value="Finalizada" <?php if ($cotizacion["estado"] == "Finalizada") echo "selected"; ?>>Finalizada</option>
+                        <option value="Cancelada" <?php if ($cotizacion["estado"] == "Cancelada") echo "selected"; ?>>Cancelada</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="boton-principal">
+                    Guardar estado
+                </button>
+
+                <a href="index.php" class="boton-secundario-claro">
+                    Volver
+                </a>
+            </form>
         </div>
-    </section>
-</main>
-
-<footer class="pie">
-    <div class="pie-copy">
-        <p>&copy; 2026 Impresos Goma. Panel administrativo.</p>
     </div>
-</footer>
+</section>
 
-</body>
-</html>
+<?php include("../../includes/footer_admin.php"); ?>

@@ -18,7 +18,7 @@ $sql = "SELECT
 $resultado = $conexion->query($sql);
 ?>
 
-<main>
+<main id="contenido-principal">
     <section class="seccion">
         <div class="contenedor">
             <h2 class="titulo-seccion">Catálogo de servicios</h2>
@@ -27,6 +27,11 @@ $resultado = $conexion->query($sql);
                 Consulta los principales servicios disponibles en Impresos Goma.
                 Cada servicio puede solicitarse mediante cotización personalizada.
             </p>
+
+            <!-- Buscador en tiempo real -->
+            <div class="grupo-formulario" style="margin-bottom: 25px;">
+                <input type="text" id="buscador-servicios" placeholder="Buscar servicio (ej. playeras, bordado, rotulación)...">
+            </div>
 
             <div class="grid-catalogo">
                 <?php while ($servicio = $resultado->fetch_assoc()) { ?>

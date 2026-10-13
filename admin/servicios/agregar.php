@@ -36,111 +36,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al guardar el servicio: " . $conexion->error;
     }
 }
+
+$titulo_pagina = "Agregar servicio - Panel administrativo - Impresos Goma";
+include("../../includes/header_admin.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Agregar servicio - Panel administrativo</title>
-    <link rel="stylesheet" href="../../assets/css/estilos.css">
-</head>
-<body>
+<section class="seccion">
+    <div class="contenedor">
+        <h2 class="titulo-seccion">Agregar servicio</h2>
 
-<header class="encabezado">
-    <div class="contenedor encabezado-contenido">
-        <div class="logo-area">
-            <h1>Panel administrativo</h1>
-            <p>Agregar servicio</p>
-        </div>
+        <p class="texto-seccion">
+            Registra un nuevo servicio para mostrarlo en el catálogo público.
+        </p>
 
-        <nav class="menu">
-            <a href="../panel.php">Panel</a>
-            <a href="../categorias/index.php">Categorías</a>
-            <a href="index.php">Servicios</a>
-            <a href="../cotizaciones/index.php">Cotizaciones</a>
-            <a href="../usuarios/index.php">Usuarios</a>
-            <a href="../../logout.php">Cerrar sesión</a>
-        </nav>
+        <?php if ($mensaje != "") { ?>
+            <div class="mensaje-error">
+                <?php echo $mensaje; ?>
+            </div>
+        <?php } ?>
+
+        <form class="formulario" method="POST" action="agregar.php">
+            <div class="grupo-formulario">
+                <label for="nombre_servicio">Nombre del servicio</label>
+                <input type="text" id="nombre_servicio" name="nombre_servicio" required>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="id_categoria">Categoría</label>
+                <select id="id_categoria" name="id_categoria" required>
+                    <option value="">Selecciona una categoría</option>
+
+                    <?php while ($categoria = $categorias->fetch_assoc()) { ?>
+                        <option value="<?php echo $categoria['id_categoria']; ?>">
+                            <?php echo htmlspecialchars($categoria['nombre_categoria']); ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="4"></textarea>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="imagen">Nombre de imagen</label>
+                <input 
+                    type="text" 
+                    id="imagen"
+                    name="imagen" 
+                    placeholder="Ejemplo: playera_bordado.jpg"
+                >
+                <p class="nota-login">
+                    La imagen debe estar guardada manualmente en assets/img/servicios/.
+                </p>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado" required>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div>
+
+            <button type="submit" class="boton-principal">
+                Guardar servicio
+            </button>
+
+            <a href="index.php" class="boton-secundario-claro">
+                Cancelar
+            </a>
+        </form>
     </div>
-</header>
+</section>
 
-<main>
-    <section class="seccion">
-        <div class="contenedor">
-            <h2 class="titulo-seccion">Agregar servicio</h2>
-
-            <p class="texto-seccion">
-                Registra un nuevo servicio para mostrarlo en el catálogo público.
-            </p>
-
-            <?php if ($mensaje != "") { ?>
-                <div class="mensaje-error">
-                    <?php echo $mensaje; ?>
-                </div>
-            <?php } ?>
-
-            <form class="formulario" method="POST" action="agregar.php">
-                <div class="grupo-formulario">
-                    <label>Nombre del servicio</label>
-                    <input type="text" name="nombre_servicio" required>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Categoría</label>
-                    <select name="id_categoria" required>
-                        <option value="">Selecciona una categoría</option>
-
-                        <?php while ($categoria = $categorias->fetch_assoc()) { ?>
-                            <option value="<?php echo $categoria['id_categoria']; ?>">
-                                <?php echo $categoria['nombre_categoria']; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Descripción</label>
-                    <textarea name="descripcion" rows="4"></textarea>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Nombre de imagen</label>
-                    <input 
-                        type="text" 
-                        name="imagen" 
-                        placeholder="Ejemplo: playera_bordado.jpg"
-                    >
-                    <p class="nota-login">
-                        La imagen debe estar guardada manualmente en assets/img/servicios/.
-                    </p>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Estado</label>
-                    <select name="estado" required>
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="boton-principal">
-                    Guardar servicio
-                </button>
-
-                <a href="index.php" class="boton-secundario-claro">
-                    Cancelar
-                </a>
-            </form>
-        </div>
-    </section>
-</main>
-
-<footer class="pie">
-    <div class="pie-copy">
-        <p>&copy; 2026 Impresos Goma. Panel administrativo.</p>
-    </div>
-</footer>
-
-</body>
-</html>
+<?php include("../../includes/footer_admin.php"); ?>

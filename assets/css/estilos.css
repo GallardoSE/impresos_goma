@@ -15,6 +15,7 @@ body {
     background-color: #f4f4f2;
     color: #222;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -78,6 +79,7 @@ a {
 
 .menu {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 8px;
 }
@@ -95,7 +97,7 @@ a {
 }
 
 /* ================================
-   INICIO
+   INICIO (HERO)
 ================================ */
 
 .hero {
@@ -189,7 +191,7 @@ a {
 }
 
 /* ================================
-   SECCIONES
+   SECCIONES Y TARJETAS
 ================================ */
 
 .seccion {
@@ -219,26 +221,22 @@ a {
     overflow: hidden;
 }
 
-/* Línea superior de color */
-.tarjeta::before {
+.tarjeta::before,
+.tarjeta::after {
     content: "";
     position: absolute;
-    top: 0;
     left: 18px;
     right: 18px;
     height: 3px;
     background-color: #ffd400;
 }
 
-/* Línea inferior de color */
+.tarjeta::before {
+    top: 0;
+}
+
 .tarjeta::after {
-    content: "";
-    position: absolute;
     bottom: 0;
-    left: 18px;
-    right: 18px;
-    height: 3px;
-    background-color: #ffd400;
 }
 
 .tarjeta h3 {
@@ -255,7 +253,6 @@ a {
     border-color: #c9c9c9;
 }
 
-/* Variación sutil de colores CMYK en las tarjetas */
 .tarjeta:nth-child(1)::before,
 .tarjeta:nth-child(1)::after {
     background-color: #ffd400;
@@ -294,6 +291,7 @@ a {
 .bloque-info p {
     color: #444;
 }
+
 /* ================================
    CATÁLOGO DE SERVICIOS
 ================================ */
@@ -330,7 +328,6 @@ a {
     display: block;
 }
 
-/* Si la imagen no existe, el espacio queda como recuadro gris */
 .contenido-servicio {
     padding: 18px;
 }
@@ -377,6 +374,7 @@ a {
     background-color: #222;
     color: white;
 }
+
 /* ================================
    DETALLE DE SERVICIO
 ================================ */
@@ -557,34 +555,6 @@ a {
 }
 
 /* ================================
-   DETALLE ADMINISTRATIVO
-================================ */
-
-.detalle-admin {
-    background-color: #ffffff;
-    border: 1px solid #dedede;
-    border-radius: 6px;
-    padding: 28px;
-    max-width: 850px;
-}
-
-.detalle-admin h3 {
-    margin-bottom: 12px;
-    color: #111;
-}
-
-.detalle-admin p {
-    margin-bottom: 8px;
-    color: #444;
-}
-
-.detalle-admin hr {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-    margin: 22px 0;
-}
-
-/* ================================
    CONTACTO
 ================================ */
 
@@ -646,13 +616,244 @@ a {
     font-size: 13px;
 }
 
-/* ================================
+/* ==========================================
+   BOTONES FLOTANTES Y UTILIDADES
+   ========================================== */
+
+/* Botón Flotante de WhatsApp */
+.btn-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.1);
+    background-color: #1ebc57;
+}
+
+.logo-wa-svg {
+    width: 28px;
+    height: 28px;
+    fill: #ffffff;
+}
+
+/* Botón Volver Arriba */
+.btn-arriba {
+    display: none;
+    position: fixed;
+    bottom: 82px;
+    right: 20px;
+    background-color: #202020;
+    color: #ffd400;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: transform 0.2s ease;
+}
+
+.btn-arriba:hover {
+    transform: scale(1.1);
+}
+
+/* ==========================================
+   MEJORAS DE ACCESIBILIDAD (WCAG 2.2 AA)
+   ========================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #0056b3 !important;
+    outline-offset: 3px !important;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 10px;
+    background: #000000;
+    color: #ffffff;
+    padding: 10px 15px;
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 10px;
+}
+
+/* ==========================================
+   BOTÓN SWITCH DESLIZANTE (C / O)
+   ========================================== */
+
+.switch-theme-container {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.switch-btn {
+    position: relative;
+    width: 64px;
+    height: 32px;
+    background-color: #374151;
+    border: 2px solid #374151;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.switch-text {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    user-select: none;
+    z-index: 1;
+}
+
+.switch-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.switch-btn:focus-visible {
+    outline: 3px solid #0056b3 !important;
+    outline-offset: 4px !important;
+}
+
+/* ==========================================
+   MODO OSCURO (DATA-THEME="DARK")
+   ========================================== */
+
+:root {
+    --bg-principal: #ffffff;
+    --texto-principal: #222222;
+}
+
+[data-theme="dark"] {
+    --bg-principal: #121212;
+    --texto-principal: #f1f1f1;
+}
+
+[data-theme="dark"] body {
+    background-color: #121212 !important;
+    color: #f1f1f1 !important;
+}
+
+/* Cajas y contenedores en Modo Oscuro */
+[data-theme="dark"] .encabezado,
+[data-theme="dark"] .hero-card,
+[data-theme="dark"] .tarjeta,
+[data-theme="dark"] .card-servicio,
+[data-theme="dark"] .detalle-info,
+[data-theme="dark"] .formulario,
+[data-theme="dark"] .contacto-card,
+[data-theme="dark"] .tabla-admin,
+[data-theme="dark"] .fondo-suave {
+    background-color: #1e1e1e !important;
+    color: #f1f1f1 !important;
+    border-color: #333333 !important;
+}
+
+/* Textos principales e identificadores */
+[data-theme="dark"] .logo-area h1,
+[data-theme="dark"] .menu a,
+[data-theme="dark"] .titulo-seccion,
+[data-theme="dark"] .tarjeta h3,
+[data-theme="dark"] .contenido-servicio h3,
+[data-theme="dark"] .contacto-card h3,
+[data-theme="dark"] .grupo-formulario label,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3 {
+    color: #ffffff !important;
+}
+
+/* Textos secundarios y descripciones legibles */
+[data-theme="dark"] .logo-area p,
+[data-theme="dark"] .texto-seccion,
+[data-theme="dark"] p {
+    color: #cccccc !important;
+}
+
+/* Campos de formulario en Modo Oscuro */
+[data-theme="dark"] .grupo-formulario input,
+[data-theme="dark"] .grupo-formulario select,
+[data-theme="dark"] .grupo-formulario textarea {
+    background-color: #2a2a2a !important;
+    color: #ffffff !important;
+    border: 1px solid #555555 !important;
+}
+
+[data-theme="dark"] .grupo-formulario input::placeholder,
+[data-theme="dark"] .grupo-formulario textarea::placeholder {
+    color: #aaaaaa !important;
+}
+
+/* Switch en Modo Oscuro: Fondo blanco, texto y perilla oscuros */
+[data-theme="dark"] .switch-btn {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+[data-theme="dark"] .switch-text {
+    color: #111111 !important;
+}
+
+[data-theme="dark"] .switch-thumb {
+    transform: translateX(32px) !important;
+    background-color: #111111 !important;
+}
+
+[data-theme="dark"] .btn-arriba {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+}
+
+/* ==========================================
    RESPONSIVE
-================================ */
+========================================== */
 
 @media (max-width: 900px) {
 
-        .hero-marca {
+    .hero-marca,
+    .encabezado-contenido,
+    .bloque-info {
         flex-direction: column;
         align-items: flex-start;
     }
@@ -660,29 +861,14 @@ a {
     .logo-hero {
         width: 150px;
     }
-    
-    .contacto-grid {
-        grid-template-columns: 1fr;
-    }
-        
-    .detalle-servicio {
-        grid-template-columns: 1fr;
-    }
-     
-    .grid-catalogo {
-        grid-template-columns: repeat(2, 1fr);
-    }
 
-    .encabezado-contenido,
-    .bloque-info {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
+    .contacto-grid,
+    .detalle-servicio,
     .hero-contenido {
         grid-template-columns: 1fr;
     }
 
+    .grid-catalogo,
     .tarjetas {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -694,10 +880,7 @@ a {
 
 @media (max-width: 600px) {
 
-        .grid-catalogo {
-        grid-template-columns: 1fr;
-    }
-
+    .grid-catalogo,
     .tarjetas {
         grid-template-columns: 1fr;
     }
@@ -708,5 +891,6 @@ a {
 
     .menu {
         flex-direction: column;
+        align-items: flex-start;
     }
 }

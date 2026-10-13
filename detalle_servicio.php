@@ -31,7 +31,7 @@ $sql = "SELECT
 $resultado = $conexion->query($sql);
 
 if ($resultado->num_rows == 0) {
-    echo "<main><section class='seccion'><div class='contenedor'>";
+    echo "<main id='contenido-principal'><section class='seccion'><div class='contenedor'>";
     echo "<h2>Servicio no encontrado</h2>";
     echo "<p>El servicio solicitado no existe o no está disponible.</p>";
     echo "<a href='catalogo.php' class='boton-principal'>Volver al catálogo</a>";
@@ -43,7 +43,7 @@ if ($resultado->num_rows == 0) {
 $servicio = $resultado->fetch_assoc();
 ?>
 
-<main>
+<main id="contenido-principal">
     <section class="seccion">
         <div class="contenedor detalle-servicio">
             <div class="detalle-imagen">

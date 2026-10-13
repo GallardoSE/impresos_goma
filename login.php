@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include("includes/header.php");
 ?>
 
-<main>
+<main id="contenido-principal">
     <section class="seccion">
         <div class="contenedor">
             <h2 class="titulo-seccion">Inicio de sesión</h2>

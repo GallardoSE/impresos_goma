@@ -44,95 +44,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al actualizar la categoría: " . $conexion->error;
     }
 }
+
+$titulo_pagina = "Editar categoría - Panel administrativo - Impresos Goma";
+include("../../includes/header_admin.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar categoría - Panel administrativo</title>
-    <link rel="stylesheet" href="../../assets/css/estilos.css">
-</head>
-<body>
+<section class="seccion">
+    <div class="contenedor">
+        <h2 class="titulo-seccion">Editar categoría</h2>
 
-<header class="encabezado">
-    <div class="contenedor encabezado-contenido">
-        <div class="logo-area">
-            <h1>Panel administrativo</h1>
-            <p>Editar categoría</p>
-        </div>
+        <p class="texto-seccion">
+            Modifica los datos de la categoría seleccionada.
+        </p>
 
-        <nav class="menu">
-            <a href="../panel.php">Panel</a>
-            <a href="index.php">Categorías</a>
-            <a href="../servicios/index.php">Servicios</a>
-            <a href="../cotizaciones/index.php">Cotizaciones</a>
-            <a href="../usuarios/index.php">Usuarios</a>
-            <a href="../../logout.php">Cerrar sesión</a>
-        </nav>
+        <?php if ($mensaje != "") { ?>
+            <div class="mensaje-error">
+                <?php echo $mensaje; ?>
+            </div>
+        <?php } ?>
+
+        <form class="formulario" method="POST" action="editar.php?id=<?php echo $id_categoria; ?>">
+            <div class="grupo-formulario">
+                <label for="nombre_categoria">Nombre de la categoría</label>
+                <input 
+                    type="text" 
+                    id="nombre_categoria"
+                    name="nombre_categoria" 
+                    value="<?php echo htmlspecialchars($categoria['nombre_categoria']); ?>" 
+                    required
+                >
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="4"><?php echo htmlspecialchars($categoria['descripcion']); ?></textarea>
+            </div>
+
+            <div class="grupo-formulario">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado" required>
+                    <option value="1" <?php if ($categoria["estado"] == 1) echo "selected"; ?>>
+                        Activa
+                    </option>
+                    <option value="0" <?php if ($categoria["estado"] == 0) echo "selected"; ?>>
+                        Inactiva
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" class="boton-principal">
+                Guardar cambios
+            </button>
+
+            <a href="index.php" class="boton-secundario-claro">
+                Cancelar
+            </a>
+        </form>
     </div>
-</header>
+</section>
 
-<main>
-    <section class="seccion">
-        <div class="contenedor">
-            <h2 class="titulo-seccion">Editar categoría</h2>
-
-            <p class="texto-seccion">
-                Modifica los datos de la categoría seleccionada.
-            </p>
-
-            <?php if ($mensaje != "") { ?>
-                <div class="mensaje-error">
-                    <?php echo $mensaje; ?>
-                </div>
-            <?php } ?>
-
-            <form class="formulario" method="POST" action="editar.php?id=<?php echo $id_categoria; ?>">
-                <div class="grupo-formulario">
-                    <label>Nombre de la categoría</label>
-                    <input 
-                        type="text" 
-                        name="nombre_categoria" 
-                        value="<?php echo $categoria['nombre_categoria']; ?>" 
-                        required
-                    >
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Descripción</label>
-                    <textarea name="descripcion" rows="4"><?php echo $categoria['descripcion']; ?></textarea>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Estado</label>
-                    <select name="estado" required>
-                        <option value="1" <?php if ($categoria["estado"] == 1) echo "selected"; ?>>
-                            Activa
-                        </option>
-                        <option value="0" <?php if ($categoria["estado"] == 0) echo "selected"; ?>>
-                            Inactiva
-                        </option>
-                    </select>
-                </div>
-
-                <button type="submit" class="boton-principal">
-                    Guardar cambios
-                </button>
-
-                <a href="index.php" class="boton-secundario-claro">
-                    Cancelar
-                </a>
-            </form>
-        </div>
-    </section>
-</main>
-
-<footer class="pie">
-    <div class="pie-copy">
-        <p>&copy; 2026 Impresos Goma. Panel administrativo.</p>
-    </div>
-</footer>
-
-</body>
-</html>
+<?php include("../../includes/footer_admin.php"); ?>

@@ -18,7 +18,7 @@ if (isset($_GET['servicio'])) {
 }
 ?>
 
-<main>
+<main id="contenido-principal">
     <section class="seccion">
         <div class="contenedor">
             <h2 class="titulo-seccion">Solicitud de cotización</h2>

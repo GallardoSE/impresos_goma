@@ -16,7 +16,7 @@ $sql = "SELECT
 $resultado = $conexion->query($sql);
 ?>
 
-<main>
+<main id="contenido-principal">
     <section class="seccion">
         <div class="contenedor">
             <h2 class="titulo-seccion">Galería de trabajos</h2>

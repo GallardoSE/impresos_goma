@@ -2,7 +2,7 @@
 include("includes/header.php");
 ?>
 
-<main>
+<main id="contenido-principal">
     <section class="hero">
     <div class="contenedor hero-contenido">
         <div class="hero-marca">

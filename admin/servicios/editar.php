@@ -55,122 +55,91 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al actualizar el servicio: " . $conexion->error;
     }
 }
+
+$titulo_pagina = "Editar servicio - Panel administrativo - Impresos Goma";
+include("../../includes/header_admin.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar servicio - Panel administrativo</title>
-    <link rel="stylesheet" href="../../assets/css/estilos.css">
-</head>
-<body>
+<section class="seccion">
+    <div class="contenedor">
+        <h2 class="titulo-seccion">Editar servicio</h2>
 
-<header class="encabezado">
-    <div class="contenedor encabezado-contenido">
-        <div class="logo-area">
-            <h1>Panel administrativo</h1>
-            <p>Editar servicio</p>
-        </div>
+        <p class="texto-seccion">
+            Modifica los datos del servicio seleccionado.
+        </p>
 
-        <nav class="menu">
-            <a href="../panel.php">Panel</a>
-            <a href="../categorias/index.php">Categorías</a>
-            <a href="index.php">Servicios</a>
-            <a href="../cotizaciones/index.php">Cotizaciones</a>
-            <a href="../usuarios/index.php">Usuarios</a>
-            <a href="../../logout.php">Cerrar sesión</a>
-        </nav>
-    </div>
-</header>
+        <?php if ($mensaje != "") { ?>
+            <div class="mensaje-error">
+                <?php echo $mensaje; ?>
+            </div>
+        <?php } ?>
 
-<main>
-    <section class="seccion">
-        <div class="contenedor">
-            <h2 class="titulo-seccion">Editar servicio</h2>
+        <form class="formulario" method="POST" action="editar.php?id=<?php echo $id_servicio; ?>">
+            <div class="grupo-formulario">
+                <label for="nombre_servicio">Nombre del servicio</label>
+                <input 
+                    type="text" 
+                    id="nombre_servicio"
+                    name="nombre_servicio" 
+                    value="<?php echo htmlspecialchars($servicio['nombre_servicio']); ?>" 
+                    required
+                >
+            </div>
 
-            <p class="texto-seccion">
-                Modifica los datos del servicio seleccionado.
-            </p>
-
-            <?php if ($mensaje != "") { ?>
-                <div class="mensaje-error">
-                    <?php echo $mensaje; ?>
-                </div>
-            <?php } ?>
-
-            <form class="formulario" method="POST" action="editar.php?id=<?php echo $id_servicio; ?>">
-                <div class="grupo-formulario">
-                    <label>Nombre del servicio</label>
-                    <input 
-                        type="text" 
-                        name="nombre_servicio" 
-                        value="<?php echo $servicio['nombre_servicio']; ?>" 
-                        required
-                    >
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Categoría</label>
-                    <select name="id_categoria" required>
-                        <?php while ($categoria = $categorias->fetch_assoc()) { ?>
-                            <option 
-                                value="<?php echo $categoria['id_categoria']; ?>"
-                                <?php if ($servicio["id_categoria"] == $categoria["id_categoria"]) echo "selected"; ?>
-                            >
-                                <?php echo $categoria['nombre_categoria']; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Descripción</label>
-                    <textarea name="descripcion" rows="4"><?php echo $servicio['descripcion']; ?></textarea>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Nombre de imagen</label>
-                    <input 
-                        type="text" 
-                        name="imagen" 
-                        value="<?php echo $servicio['imagen']; ?>"
-                        placeholder="Ejemplo: serigrafia.jpg"
-                    >
-                    <p class="nota-login">
-                        La imagen debe estar guardada manualmente en assets/img/servicios/.
-                    </p>
-                </div>
-
-                <div class="grupo-formulario">
-                    <label>Estado</label>
-                    <select name="estado" required>
-                        <option value="1" <?php if ($servicio["estado"] == 1) echo "selected"; ?>>
-                            Activo
+            <div class="grupo-formulario">
+                <label for="id_categoria">Categoría</label>
+                <select id="id_categoria" name="id_categoria" required>
+                    <?php while ($categoria = $categorias->fetch_assoc()) { ?>
+                        <option 
+                            value="<?php echo $categoria['id_categoria']; ?>"
+                            <?php if ($servicio["id_categoria"] == $categoria["id_categoria"]) echo "selected"; ?>
+                        >
+                            <?php echo htmlspecialchars($categoria['nombre_categoria']); ?>
                         </option>
-                        <option value="0" <?php if ($servicio["estado"] == 0) echo "selected"; ?>>
-                            Inactivo
-                        </option>
-                    </select>
-                </div>
+                    <?php } ?>
+                </select>
+            </div>
 
-                <button type="submit" class="boton-principal">
-                    Guardar cambios
-                </button>
+            <div class="grupo-formulario">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="4"><?php echo htmlspecialchars($servicio['descripcion']); ?></textarea>
+            </div>
 
-                <a href="index.php" class="boton-secundario-claro">
-                    Cancelar
-                </a>
-            </form>
-        </div>
-    </section>
-</main>
+            <div class="grupo-formulario">
+                <label for="imagen">Nombre de imagen</label>
+                <input 
+                    type="text" 
+                    id="imagen"
+                    name="imagen" 
+                    value="<?php echo htmlspecialchars($servicio['imagen']); ?>"
+                    placeholder="Ejemplo: serigrafia.jpg"
+                >
+                <p class="nota-login">
+                    La imagen debe estar guardada manualmente en assets/img/servicios/.
+                </p>
+            </div>
 
-<footer class="pie">
-    <div class="pie-copy">
-        <p>&copy; 2026 Impresos Goma. Panel administrativo.</p>
+            <div class="grupo-formulario">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado" required>
+                    <option value="1" <?php if ($servicio["estado"] == 1) echo "selected"; ?>>
+                        Activo
+                    </option>
+                    <option value="0" <?php if ($servicio["estado"] == 0) echo "selected"; ?>>
+                        Inactivo
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" class="boton-principal">
+                Guardar cambios
+            </button>
+
+            <a href="index.php" class="boton-secundario-claro">
+                Cancelar
+            </a>
+        </form>
     </div>
-</footer>
+</section>
 
-</body>
-</html>
+<?php include("../../includes/footer_admin.php"); ?>
